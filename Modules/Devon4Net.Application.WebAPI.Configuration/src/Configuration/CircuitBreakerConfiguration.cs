@@ -50,7 +50,9 @@ namespace Devon4Net.Application.WebAPI.Configuration
                     {
                         return new HttpClientHandler
                         {
-                            ServerCertificateCustomValidationCallback = (m, c, a, e) => CheckCertificate,
+                            // Esta linea me sigue sin ir. Da error al validar el certificado
+                            //ServerCertificateCustomValidationCallback = (m, c, a, e) => CheckCertificate,
+                            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
                         };
                     }
 

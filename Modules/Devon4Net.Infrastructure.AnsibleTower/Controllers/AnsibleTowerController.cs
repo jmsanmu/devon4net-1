@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Devon4Net.Infrastructure.AnsibleTower.Dto;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Applications;
+using Devon4Net.Infrastructure.AnsibleTower.Dto.Credentials;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Inventories;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.JobTemplates;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Organizations;
@@ -23,6 +25,50 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Controllers
             AnsibleTowerHandler = ansibleTowerHandler;
         }
 
+        #region FullFlow
+
+        /// <summary>
+        /// Performs a regular Ansible Tower workflow.
+        /// </summary>
+        /// <param name="user">User name</param>
+        /// <param name="password">User password</param>
+        /// <returns>Something</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("/v1/ansible/fullflow")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> FullFlow(string user, string password)
+        {
+            Devon4NetLogger.Debug("Executing FullFlow from controller AnsibleTowerController");
+            var token = await AnsibleTowerHandler.Login(user, password);
+            var organizations = await AnsibleTowerHandler.GetOrganizations(token.Token);
+
+            // Organizations
+            Devon4NetLogger.Debug("Organization count: " + organizations.count);
+            if (organizations.results.Length == 0 || organizations.results[0].name != "devapps2")
+            {
+                return BadRequest();
+            }
+            var devapps2 = organizations.results[0];
+
+            // Credentials
+            var credentialsList = await AnsibleTowerHandler.GetCredentials(token.Token, "fakecredential");
+            if (credentialsList.results.Length == 0 || credentialsList.results[0].name != "fakecredential")
+            {
+                var fakeCredential = new CreateCredentialRequestDto { name = "fakecredential", description = "none", organization = 3, credential_type = 2, inputs = new Dictionary<string, string>(), user = 5 };
+                fakeCredential.inputs.Add("username", "fakeuser");
+                fakeCredential.inputs.Add("password", "fakepassword");
+
+                var newCredential = await AnsibleTowerHandler.CreateCredential(token.Token, fakeCredential);
+            }
+
+            return Ok(await AnsibleTowerHandler.Login(user, password));
+        }
+
+        #endregion
 
         #region Security
 
@@ -99,7 +145,7 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("/v1/ansible/organizations")]
-        [ProducesResponseType(typeof(OrganizationsResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginatedResultDto<ResultOrganizationDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

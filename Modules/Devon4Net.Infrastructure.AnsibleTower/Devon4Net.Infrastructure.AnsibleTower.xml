@@ -9,6 +9,14 @@
             Ansible handler manager
             </summary>
         </member>
+        <member name="M:Devon4Net.Infrastructure.AnsibleTower.Controllers.AnsibleTowerController.FullFlow(System.String,System.String)">
+            <summary>
+            Performs a regular Ansible Tower workflow.
+            </summary>
+            <param name="user">User name</param>
+            <param name="password">User password</param>
+            <returns>Something</returns>
+        </member>
         <member name="M:Devon4Net.Infrastructure.AnsibleTower.Controllers.AnsibleTowerController.Login(System.String,System.String)">
             <summary>
             Performs the basic Ansible Tower login

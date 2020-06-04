@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Devon4Net.Infrastructure.AnsibleTower.Common;
 using Devon4Net.Infrastructure.AnsibleTower.Dto;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Applications;
+using Devon4Net.Infrastructure.AnsibleTower.Dto.Credentials;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Inventories;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.JobTemplates;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Organizations;
@@ -62,9 +63,10 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Handler
 
         #region Organizations
 
-        public Task<OrganizationsResponseDto> GetOrganizations(string authenticationToken)
+        public Task<PaginatedResultDto<ResultOrganizationDto>> GetOrganizations(string authenticationToken, string search = null)
         {
-            return GetAnsible<OrganizationsResponseDto>(authenticationToken, AnsibleTowerInstance.ApiDefinition.organizations, null);
+            // TODO: rehacer la parte del search, es un poco chapuza pero lo hice para probar.
+            return GetAnsible<PaginatedResultDto<ResultOrganizationDto>>(authenticationToken, AnsibleTowerInstance.ApiDefinition.organizations + (search != null ? "?search=" + search : ""), null);
         }
 
         public Task<ResultOrganizationDto> GetOrganizationById(string authenticationToken, string organizationId)
@@ -153,6 +155,21 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Handler
         {
             SetAutehnticationToken(authenticationToken);
             return CircuitBreakerHttpClient.Post<T>(AnsibleTowerInstance.CircuitBreakerName, endpoint, dataToSend, MediaType.ApplicationJson, GetAuthorizationHeaders(), true);
+        }
+
+        #endregion
+
+        #region Credentials
+
+        public Task<PaginatedResultDto<GetCredentialsResponseDto>> GetCredentials(string authenticationToken, string search = null)
+        {
+            // TODO: rehacer la parte del search, es un poco chapuza pero lo hice para probar.
+            return GetAnsible<PaginatedResultDto<GetCredentialsResponseDto>>(authenticationToken, AnsibleTowerInstance.ApiDefinition.credentials + (search != null ? "?search=" + search : ""), null);
+        }
+
+        public Task<ResultOrganizationDto> CreateCredential(string authenticationToken, CreateCredentialRequestDto credentialRequest)
+        {
+            return PostAnsible<ResultOrganizationDto>(authenticationToken, AnsibleTowerInstance.ApiDefinition.credentials, credentialRequest);
         }
 
         #endregion

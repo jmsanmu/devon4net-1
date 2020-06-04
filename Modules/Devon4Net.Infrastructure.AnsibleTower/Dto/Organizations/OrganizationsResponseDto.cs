@@ -4,14 +4,6 @@ using Devon4Net.Infrastructure.AnsibleTower.Dto.Common;
 
 namespace Devon4Net.Infrastructure.AnsibleTower.Dto.Organizations
 {
-    public class OrganizationsResponseDto
-    {
-        public int count { get; set; }
-        public object previous { get; set; }
-        public ResultOrganizationDto[] results { get; set; }
-        public object next { get; set; }
-    }
-
     public class ResultOrganizationDto
     {
         public string description { get; set; }

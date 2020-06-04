@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Devon4Net.Infrastructure.AnsibleTower.Dto;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Applications;
+using Devon4Net.Infrastructure.AnsibleTower.Dto.Credentials;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Inventories;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.JobTemplates;
 using Devon4Net.Infrastructure.AnsibleTower.Dto.Organizations;
@@ -12,7 +13,7 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Handler
         Task<LoginRequestDto> Login(string userName, string password);
         Task<GetApplicationsResponseDto> GetApplications(string authenticationToken);
         Task<ApplicationsResponseDto> CreateApplication(ApplicationsRequestDto applicationstRequest, string authenticationToken);
-        Task<OrganizationsResponseDto> GetOrganizations(string authenticationToken);
+        Task<PaginatedResultDto<ResultOrganizationDto>> GetOrganizations(string authenticationToken, string search = null);
         Task<ResultOrganizationDto> GetOrganizationById(string authenticationToken, string organizationId);
         Task<ResultOrganizationDto> CreateOrganization(string authenticationToken, CreateOrganizationRequestDto organizationRequest);
         Task<GetInventoriesResponseDto> GetInventories(string authenticationToken);
@@ -21,5 +22,7 @@ namespace Devon4Net.Infrastructure.AnsibleTower.Handler
         Task<GetJobTemplatesResponseDto> GetJobTemplates(string authenticationToken);
         Task<ResultJobDto> GetJobTemplate(string authenticationToken, string jobTemplateId);
         Task<ResultJobDto> CreateJobTemplate(string authenticationToken, CreateJobTemplateRequestDto createJobTemplateRequest);
+        Task<PaginatedResultDto<GetCredentialsResponseDto>> GetCredentials(string authenticationToken, string search = null);
+        Task<ResultOrganizationDto> CreateCredential(string authenticationToken, CreateCredentialRequestDto credentialRequest);
     }
 }

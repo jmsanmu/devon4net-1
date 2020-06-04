@@ -185,3 +185,4 @@ FakesAssemblies/
 project.lock.json
 /**/.vs/
 /Templates/Devon4Net4NetAPI/src/Devon4Net.Application.WebAPI/Logs/log-4252019.txt
+**/Logs/*
