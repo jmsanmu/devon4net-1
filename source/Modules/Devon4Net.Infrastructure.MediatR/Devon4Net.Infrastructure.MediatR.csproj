@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/devonfw/devon4net</RepositoryUrl>
     <RepositoryType />
     <license>http://www.devonfw.com/terms-of-use/</license>
-    <PackageTags>devonfw devon4net MedtiaR CQRS Capgemini</PackageTags>
-    <PackageReleaseNotes>Netstandard 2.1 for devonfw net core 3.1 compatibility version</PackageReleaseNotes>
+    <PackageTags>devonfw devon4net MedtiaR MediatR Capgemini</PackageTags>
+    <PackageReleaseNotes>NET 5.0+ compatibility version</PackageReleaseNotes>
     <icon>https://avatars2.githubusercontent.com/u/7803029?s=200&amp;v=4</icon>
   </PropertyGroup>
 

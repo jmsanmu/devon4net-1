@@ -2,8 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>5.0.0</Version>
+    <Authors>Capgemini, ADCenter Valencia, Traiectum Team</Authors>
+    <Company>Capgemini S.A.</Company>
+    <Description>Common classes to manage CORS configuration</Description>
+    <Copyright>Copyright © Capgemini</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.devonfw.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/devonfw/devon4net</RepositoryUrl>
+    <RepositoryType />
+    <license>http://www.devonfw.com/terms-of-use/</license>
+    <PackageTags>devonfw devon4net Capgemini Kafka</PackageTags>
+    <PackageReleaseNotes>NET 5.0+ compatibility version</PackageReleaseNotes>
+    <icon>https://avatars2.githubusercontent.com/u/7803029?s=200&amp;v=4</icon>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Handlers\IKafkaAdminHandler.cs" />
     <Compile Remove="Handlers\KafkaAdminHandler.cs" />
