@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,7 @@ namespace Devon4Net.Infrastructure.Grpc
     {
         public static void SetupGrpc(this IServiceCollection services, IConfiguration configuration)
         {
-            var grpcOptions = services.GetTypedOptions<GrpcOptions>(configuration, "Grpc");
+            var grpcOptions = services.GetTypedOptions<GrpcOptions>(configuration, OptionSectionName.GrpcSection);
 
             if (!grpcOptions.EnableGrpc || string.IsNullOrEmpty(grpcOptions.GrpcServer)) return;
 

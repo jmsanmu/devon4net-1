@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.MediatR;
 using Devon4Net.Infrastructure.LiteDb.LiteDb;
@@ -19,7 +20,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
     {
         public static void SetupMediatR(this IServiceCollection services, ref IConfiguration configuration)
         {
-            var mediatROptions = services.GetTypedOptions<MediatROptions>(configuration, "MediatR");
+            var mediatROptions = services.GetTypedOptions<MediatROptions>(configuration, OptionSectionName.MediatRSection);
 
             if (mediatROptions == null || !mediatROptions.EnableMediatR) return;
             ConfigureMediatRGenericDependencyInjection(ref services);

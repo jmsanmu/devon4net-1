@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Devon4Net.Domain.UnitOfWork.Enums;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Log;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +26,7 @@ namespace Devon4Net.Domain.UnitOfWork.Common
         public static void SetupDatabase<T>(this IServiceCollection services, IConfiguration configuration, string connectionStringName, DatabaseType databaseType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient, bool migrate = false, CosmosConfigurationParams cosmosConfigurationParams = null) where T : DbContext 
         {
             ServiceLifetime = serviceLifetime;
-            var applicationConnectionStrings = configuration.GetSection("ConnectionStrings").GetChildren();
+            var applicationConnectionStrings = configuration.GetSection(OptionSectionName.ConnectionStringsSection).GetChildren();
             if (applicationConnectionStrings == null) throw new ArgumentException("There are no connection strings provided.");
             var connectionString = applicationConnectionStrings.FirstOrDefault(c => c.Key.ToLower() == connectionStringName.ToLower());
             if (connectionString == null || string.IsNullOrEmpty(connectionString.Value)) throw new ArgumentException($"The provided connection string ({connectionStringName}) provided does not exists.");

@@ -12,7 +12,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.TodoManagement.Controllers
     /// <summary>
     /// TODOs controller
     /// </summary>
-    [EnableCors("CorsPolicy")]
+    [EnableCors("CorsPolicy1")]
     [ApiController]
     [Route("[controller]")]
     public class TodoController: ControllerBase
@@ -34,6 +34,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.TodoManagement.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [EnableCors("CorsPolicy1")]
         [ProducesResponseType(typeof(List<TodoDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

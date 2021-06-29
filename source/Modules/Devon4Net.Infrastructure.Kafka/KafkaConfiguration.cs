@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Confluent.Kafka;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.Kafka;
 using Devon4Net.Infrastructure.Kafka.Handlers;
@@ -15,7 +16,7 @@ namespace Devon4Net.Infrastructure.Kafka
 
         public static void SetupKafka(this IServiceCollection services, IConfiguration configuration)
         {
-            var kafkaOptions = services.GetTypedOptions<KafkaOptions>(configuration, "Kafka");
+            var kafkaOptions = services.GetTypedOptions<KafkaOptions>(configuration, OptionSectionName.KafkaSection);
 
             if (kafkaOptions == null || !kafkaOptions.EnableKafka || kafkaOptions.Producers == null || !kafkaOptions.Producers.Any()) return;
 

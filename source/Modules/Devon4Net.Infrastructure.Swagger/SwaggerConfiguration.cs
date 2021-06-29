@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Devon4Net.Infrastructure.JWT.Common.Const;
 using Microsoft.Extensions.Configuration;
 using Devon4Net.Infrastructure.Common.Options.Swagger;
+using Devon4Net.Infrastructure.Common.Enums;
 
 namespace Devon4Net.Application.WebAPI.Configuration
 {
@@ -16,7 +17,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
     {
         public static void SetupSwagger(this IServiceCollection services, ref IConfiguration configuration, bool useSwagger = true)
         {
-            var swaggerOptions = services.GetTypedOptions<SwaggerOptions>(configuration, "Swagger");
+            var swaggerOptions = services.GetTypedOptions<SwaggerOptions>(configuration, OptionSectionName.SwaggerSection);
 
             if (!useSwagger) return;
             if (swaggerOptions?.Endpoint == null) return;

@@ -46,6 +46,7 @@ namespace Devon4Net.Application.WebAPI
         {
             app.UseHsts();
             app.UseStaticFiles();
+            app.UseCors("CorsPolicy1");
             app.ConfigureDevonFw();
             app.UseHttpsRedirection();
             app.UseRouting();

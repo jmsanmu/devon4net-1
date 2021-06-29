@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.JWT;
 using Devon4Net.Infrastructure.JWT.Common.Const;
@@ -14,7 +15,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
     {
         public static void SetupJwtConf(this IServiceCollection services, ref IConfiguration configuration)
         {
-            var jwtOptions = services.GetTypedOptions<JwtOptions>(configuration, "JWT");
+            var jwtOptions = services.GetTypedOptions<JwtOptions>(configuration, OptionSectionName.JWTSection);
 
             if (jwtOptions == null) return;
             

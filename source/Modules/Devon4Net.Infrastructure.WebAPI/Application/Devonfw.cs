@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Devon4Net.Application.WebAPI.Configuration.Common;
 using Devon4Net.Infrastructure.Common;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.Devon;
 using Devon4Net.Infrastructure.Extensions.Helpers;
@@ -70,7 +71,6 @@ namespace Devon4Net.Application.WebAPI.Configuration.Application
         {
             app.UseRequestLocalization();
             app.SetupDevonfwMiddleware();
-
             bool.TryParse(Configuration[$"{DevonFwConst.DevonFwAppSettingsNodeName}:UseSwagger"], out bool useSwagger);
 
             if (!useSwagger) return;
@@ -98,7 +98,7 @@ namespace Devon4Net.Application.WebAPI.Configuration.Application
         {
             Devon4NetLogger.Information($"CheckExtraSettingsFiles Initialized");
             var appSettingsList = new List<string>();
-            Configuration.GetSection("ExtraSettingsFiles").Bind(appSettingsList);
+            Configuration.GetSection(OptionSectionName.ExtraSettingsFilesSection).Bind(appSettingsList);
 
             if (!appSettingsList.Any())
             {
@@ -113,7 +113,7 @@ namespace Devon4Net.Application.WebAPI.Configuration.Application
         private static void ManageSettingsFiles(IReadOnlyCollection<string> settingsItemList)
         {
             Devon4NetLogger.Information($"Managing settings global settings files ...");
-            if (settingsItemList == null || !settingsItemList.Any())
+            if (settingsItemList?.Any() != true)
             {
                 Devon4NetLogger.Information($"No global settings files found!");
                 return;

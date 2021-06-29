@@ -9,6 +9,7 @@ using System.IO;
 using Devon4Net.Infrastructure.Common.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Devon4Net.Infrastructure.Common.Enums;
 
 namespace Devon4Net.Application.WebAPI.Configuration
 {
@@ -20,7 +21,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
         private static LoggerConfiguration LoggerConfiguration { get; set; }
         public static void SetupLog(this IServiceCollection services, ref IConfiguration configuration)
         {
-            var logOptions = services.GetTypedOptions<LogOptions>(configuration, "Log");
+            var logOptions = services.GetTypedOptions<LogOptions>(configuration, OptionSectionName.LogSection);
 
             if (logOptions == null) return;
 

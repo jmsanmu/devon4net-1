@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using Devon4Net.Infrastructure.CircuitBreaker.Common;
 using Devon4Net.Infrastructure.CircuitBreaker.Handler;
 using Devon4Net.Infrastructure.Common;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.CircuitBreaker;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
 
         public static void SetupCircuitBreaker(this IServiceCollection services, ref IConfiguration configuration)
         {
-            var circuitBreakerOptions = services.GetTypedOptions<CircuitBreakerOptions>(configuration, "CircuitBreaker");
+            var circuitBreakerOptions = services.GetTypedOptions<CircuitBreakerOptions>(configuration, OptionSectionName.CircuitBreakerSection);
 
             if (circuitBreakerOptions?.Endpoints == null || !circuitBreakerOptions.Endpoints.Any())
             {

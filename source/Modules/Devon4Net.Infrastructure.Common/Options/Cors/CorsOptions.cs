@@ -1,7 +1,9 @@
-﻿namespace Devon4Net.Infrastructure.Common.Options.Cors
+﻿using System.Collections.Generic;
+
+namespace Devon4Net.Infrastructure.Common.Options.Cors
 {
     public class CorsOptions
     {
-        public Origin[] Origins { get; set; }
+        public List<Origin> Origins { get; set; }
     }
 }

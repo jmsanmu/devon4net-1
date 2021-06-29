@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Security;
 using Devon4Net.Infrastructure.Common;
+using Devon4Net.Infrastructure.Common.Enums;
 using Devon4Net.Infrastructure.Common.Options;
 using Devon4Net.Infrastructure.Common.Options.RabbitMq;
 using Devon4Net.Infrastructure.LiteDb.LiteDb;
@@ -23,10 +24,10 @@ namespace Devon4Net.Application.WebAPI.Configuration
     {
         public static void SetupRabbitMq(this IServiceCollection services, ref IConfiguration configuration)
         {
-            var rabbitMqOptions = services.GetTypedOptions<RabbitMqOptions>(configuration, "RabbitMq");
-            if (rabbitMqOptions == null || !rabbitMqOptions.EnableRabbitMq || rabbitMqOptions.Hosts == null || !rabbitMqOptions.Hosts.Any()) return;
+            var rabbitMqOptions = services.GetTypedOptions<RabbitMqOptions>(configuration, OptionSectionName.RabbitMqSection);
+            if (rabbitMqOptions?.EnableRabbitMq != true || rabbitMqOptions.Hosts?.Any() != true) return;
 
-            if (rabbitMqOptions.Hosts == null || !rabbitMqOptions.Hosts.Any())
+            if (rabbitMqOptions.Hosts?.Any() != true)
             {
                 return;
             }
@@ -92,7 +93,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
             Devon4NetLogger.Information("Please setup your database in order to have the RabbitMq messaging backup feature");
             if (rabbitMqOptions.Backup == null || !rabbitMqOptions.Backup.UseLocalBackup) return;
             Devon4NetLogger.Information("RabbitMq messaging backup feature is going to be used via LiteDb");
-            
+
             services.AddSingleton<ILiteDbContext, RabbitMqBackupLiteDbContext>();
             services.AddTransient(typeof(IRabbitMqBackupLiteDbService), typeof(RabbitMqBackupLiteDbService));
         }
@@ -101,7 +102,7 @@ namespace Devon4Net.Application.WebAPI.Configuration
         {
             var hostConfiguration = new HostConfiguration { Host = host.Host };
             var port = (ushort) (host.Port != null ? (ushort) host.Port.Value : 0);
-            
+
             if (port > 0) hostConfiguration.Port = port;
             Enum.TryParse(host.SslPolicyErrors, out SslPolicyErrors sslPolicyErrors);
 
