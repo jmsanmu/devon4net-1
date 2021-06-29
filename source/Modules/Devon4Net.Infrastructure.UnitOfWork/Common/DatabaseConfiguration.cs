@@ -82,7 +82,7 @@ namespace Devon4Net.Domain.UnitOfWork.Common
                     services.AddDbContext<T>(options => options.UseInMemoryDatabase(connectionString), ServiceLifetime);
                     break;
                 case DatabaseType.MySql:
-                    services.AddDbContext<T>(options => options.UseMySql(connectionString, sqlOptions =>
+                    services.AddDbContext<T>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
                             maxRetryCount: MaxRetryCount,
@@ -91,7 +91,7 @@ namespace Devon4Net.Domain.UnitOfWork.Common
                     }),ServiceLifetime);
                     break;
                 case DatabaseType.MariaDb:
-                    services.AddDbContext<T>(options => options.UseMySql(connectionString, sqlOptions =>
+                    services.AddDbContext<T>(options => options.UseMySql( connectionString, ServerVersion.AutoDetect(connectionString), sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
                             maxRetryCount: MaxRetryCount,

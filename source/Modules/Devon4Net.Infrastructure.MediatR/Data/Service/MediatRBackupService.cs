@@ -158,7 +158,7 @@ namespace Devon4Net.Infrastructure.MediatR.Data.Service
                     break;
                 case DatabaseConst.MySql:
                 case DatabaseConst.MySqlPomelo:
-                    optionsBuilder.UseMySql(ContextConnectionString);
+                    optionsBuilder.UseMySql(ContextConnectionString, ServerVersion.AutoDetect(ContextConnectionString));
                     break;
                 case DatabaseConst.FireBirdSql:
                 case DatabaseConst.FireBirdSqlV:
